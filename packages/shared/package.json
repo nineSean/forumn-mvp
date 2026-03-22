@@ -1,0 +1,18 @@
+{
+  "name": "@forum/shared",
+  "version": "0.0.1",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "graphql": "^16",
+    "urql": "^4",
+    "@urql/exchange-auth": "^2"
+  },
+  "devDependencies": {
+    "typescript": "^5"
+  }
+}

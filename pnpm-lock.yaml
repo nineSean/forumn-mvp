@@ -15,7 +15,31 @@ importers:
         specifier: ^5
         version: 5.9.3
 
+  packages/shared:
+    dependencies:
+      '@urql/exchange-auth':
+        specifier: ^2
+        version: 2.2.1(@urql/core@5.2.0(graphql@16.13.1))
+      graphql:
+        specifier: ^16
+        version: 16.13.1
+      urql:
+        specifier: ^4
+        version: 4.2.2(@urql/core@5.2.0(graphql@16.13.1))(react@19.2.4)
+    devDependencies:
+      typescript:
+        specifier: ^5
+        version: 5.9.3
+
 packages:
+
+  '@0no-co/graphql.web@1.2.0':
+    resolution: {integrity: sha512-/1iHy9TTr63gE1YcR5idjx8UREz1s0kFhydf3bBLCXyqjhkIc6igAzTOx3zPifCwFR87tsh/4Pa9cNts6d2otw==}
+    peerDependencies:
+      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
+    peerDependenciesMeta:
+      graphql:
+        optional: true
 
   '@turbo/darwin-64@2.8.20':
     resolution: {integrity: sha512-FQ9EX1xMU5nbwjxXxM3yU88AQQ6Sqc6S44exPRroMcx9XZHqqppl5ymJF0Ig/z3nvQNwDmz1Gsnvxubo+nXWjQ==}
@@ -47,6 +71,22 @@ packages:
     cpu: [arm64]
     os: [win32]
 
+  '@urql/core@5.2.0':
+    resolution: {integrity: sha512-/n0ieD0mvvDnVAXEQgX/7qJiVcvYvNkOHeBvkwtylfjydar123caCXcl58PXFY11oU1oquJocVXHxLAbtv4x1A==}
+
+  '@urql/exchange-auth@2.2.1':
+    resolution: {integrity: sha512-n4xUxxjvY36GJh539sLaPFyvFzreADOv8EFQdTiXOCIRVoXXhWVVI7DjY/HNtLICfbg1+UlbvQ7sNkwaBouDHg==}
+    peerDependencies:
+      '@urql/core': ^5.0.0
+
+  graphql@16.13.1:
+    resolution: {integrity: sha512-gGgrVCoDKlIZ8fIqXBBb0pPKqDgki0Z/FSKNiQzSGj2uEYHr1tq5wmBegGwJx6QB5S5cM0khSBpi/JFHMCvsmQ==}
+    engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
+
+  react@19.2.4:
+    resolution: {integrity: sha512-9nfp2hYpCwOjAN+8TZFGhtWEwgvWHXqESH8qT89AT/lWklpLON22Lc8pEtnpsZz7VmawabSU0gCjnj8aC0euHQ==}
+    engines: {node: '>=0.10.0'}
+
   turbo@2.8.20:
     resolution: {integrity: sha512-Rb4qk5YT8RUwwdXtkLpkVhNEe/lor6+WV7S5tTlLpxSz6MjV5Qi8jGNn4gS6NAvrYGA/rNrE6YUQM85sCZUDbQ==}
     hasBin: true
@@ -56,7 +96,20 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
+  urql@4.2.2:
+    resolution: {integrity: sha512-3GgqNa6iF7bC4hY/ImJKN4REQILcSU9VKcKL8gfELZM8mM5BnLH1BsCc8kBdnVGD1LIFOs4W3O2idNHhON1r0w==}
+    peerDependencies:
+      '@urql/core': ^5.0.0
+      react: '>= 16.8.0'
+
+  wonka@6.3.5:
+    resolution: {integrity: sha512-SSil+ecw6B4/Dm7Pf2sAshKQ5hWFvfyGlfPbEd6A14dOH6VDjrmbY86u6nZvy9omGwwIPFR8V41+of1EezgoUw==}
+
 snapshots:
+
+  '@0no-co/graphql.web@1.2.0(graphql@16.13.1)':
+    optionalDependencies:
+      graphql: 16.13.1
 
   '@turbo/darwin-64@2.8.20':
     optional: true
@@ -76,6 +129,22 @@ snapshots:
   '@turbo/windows-arm64@2.8.20':
     optional: true
 
+  '@urql/core@5.2.0(graphql@16.13.1)':
+    dependencies:
+      '@0no-co/graphql.web': 1.2.0(graphql@16.13.1)
+      wonka: 6.3.5
+    transitivePeerDependencies:
+      - graphql
+
+  '@urql/exchange-auth@2.2.1(@urql/core@5.2.0(graphql@16.13.1))':
+    dependencies:
+      '@urql/core': 5.2.0(graphql@16.13.1)
+      wonka: 6.3.5
+
+  graphql@16.13.1: {}
+
+  react@19.2.4: {}
+
   turbo@2.8.20:
     optionalDependencies:
       '@turbo/darwin-64': 2.8.20
@@ -86,3 +155,11 @@ snapshots:
       '@turbo/windows-arm64': 2.8.20
 
   typescript@5.9.3: {}
+
+  urql@4.2.2(@urql/core@5.2.0(graphql@16.13.1))(react@19.2.4):
+    dependencies:
+      '@urql/core': 5.2.0(graphql@16.13.1)
+      react: 19.2.4
+      wonka: 6.3.5
+
+  wonka@6.3.5: {}
