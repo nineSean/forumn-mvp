@@ -1,0 +1,67 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  member
+  admin
+}
+
+model User {
+  id           String   @id @default(uuid()) @db.Uuid
+  email        String   @unique
+  name         String
+  avatarUrl    String?  @map("avatar_url")
+  passwordHash String   @map("password_hash")
+  role         Role     @default(member)
+  createdAt    DateTime @default(now()) @map("created_at")
+  posts        Post[]
+  replies      Reply[]
+
+  @@map("users")
+}
+
+model Board {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String
+  description String   @default("")
+  sortOrder   Int      @default(0) @map("sort_order")
+  createdAt   DateTime @default(now()) @map("created_at")
+  posts       Post[]
+
+  @@map("boards")
+}
+
+model Post {
+  id         String   @id @default(uuid()) @db.Uuid
+  title      String
+  content    String
+  replyCount Int      @default(0) @map("reply_count")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  board      Board    @relation(fields: [boardId], references: [id])
+  boardId    String   @map("board_id") @db.Uuid
+  author     User     @relation(fields: [authorId], references: [id])
+  authorId   String   @map("author_id") @db.Uuid
+  replies    Reply[]
+
+  @@map("posts")
+}
+
+model Reply {
+  id        String   @id @default(uuid()) @db.Uuid
+  content   String
+  createdAt DateTime @default(now()) @map("created_at")
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String   @map("post_id") @db.Uuid
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String   @map("author_id") @db.Uuid
+
+  @@map("replies")
+}

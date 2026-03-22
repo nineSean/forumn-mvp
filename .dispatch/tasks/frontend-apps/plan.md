@@ -1,0 +1,6 @@
+# Frontend Apps (Tasks 6, 7, 8, 13)
+
+- [x] Complete Task 6: Create packages/shell with package.json, next.config.js (MF host), tailwind.config.js, postcss.config.js, tsconfig.json, NextAuth handler, _app.tsx with providers, Layout/Header/Sidebar components, RemoteLoader, route pages (forum/user/admin catch-all), globals.css, install deps, commit — already complete from previous attempt, all files verified
+- [x] Complete Task 7: Create packages/forum with package.json, next.config.js (MF remote exposing ForumPage/PostDetailPage/CreatePostPage), tsconfig.json, ForumPage (post list with cursor pagination), PostDetailPage (post detail + replies + reply form), CreatePostPage (create post form), standalone dev page, install deps, commit — all files created
+- [x] Complete Task 8: Create packages/user with ProfilePage and SettingsPage (MF remote). Create packages/admin with BoardManagePage and UserManagePage (MF remote). Each with package.json, next.config.js, tsconfig.json, standalone dev page. Install deps, commit — all files created
+- [x] Complete Task 13: Add search input to Shell Header (navigates to /search?q=...), create search results page at packages/shell/src/pages/search.tsx using SEARCH_POSTS_QUERY, commit — Header updated with search form, search.tsx created

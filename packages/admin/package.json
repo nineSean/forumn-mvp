@@ -1,0 +1,25 @@
+{
+  "name": "@forum/admin",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3003",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "^14",
+    "react": "^18",
+    "react-dom": "^18",
+    "urql": "^4",
+    "graphql": "^16",
+    "@forum/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@module-federation/nextjs-mf": "^8",
+    "typescript": "^5",
+    "@types/react": "^18",
+    "@types/react-dom": "^18"
+  }
+}
