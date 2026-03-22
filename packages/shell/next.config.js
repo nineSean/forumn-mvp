@@ -11,25 +11,21 @@ const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ["@forum/shared"],
   webpack(config, options) {
-    if (!options.isServer) {
-      config.plugins.push(
-        new NextFederationPlugin({
-          name: "shell",
-          filename: "static/chunks/remoteEntry.js",
-          remotes: {
-            forum: `forum@${REMOTE_URLS.forum}/_next/static/${options.isServer ? "ssr" : "chunks"}/remoteEntry.js`,
-            user: `user@${REMOTE_URLS.user}/_next/static/${options.isServer ? "ssr" : "chunks"}/remoteEntry.js`,
-            admin: `admin@${REMOTE_URLS.admin}/_next/static/${options.isServer ? "ssr" : "chunks"}/remoteEntry.js`,
-          },
-          shared: {
-            react: { singleton: true, requiredVersion: false },
-            "react-dom": { singleton: true, requiredVersion: false },
-            urql: { singleton: true, requiredVersion: false },
-            graphql: { singleton: true, requiredVersion: false },
-          },
-        })
-      );
-    }
+    config.plugins.push(
+      new NextFederationPlugin({
+        name: "shell",
+        filename: `static/${options.isServer ? "ssr" : "chunks"}/remoteEntry.js`,
+        remotes: {
+          forum: `forum@${REMOTE_URLS.forum}/_next/static/${options.isServer ? "ssr" : "chunks"}/remoteEntry.js`,
+          user: `user@${REMOTE_URLS.user}/_next/static/${options.isServer ? "ssr" : "chunks"}/remoteEntry.js`,
+          admin: `admin@${REMOTE_URLS.admin}/_next/static/${options.isServer ? "ssr" : "chunks"}/remoteEntry.js`,
+        },
+        shared: {
+          urql: { singleton: true, requiredVersion: false },
+          graphql: { singleton: true, requiredVersion: false },
+        },
+      })
+    );
     return config;
   },
 };
