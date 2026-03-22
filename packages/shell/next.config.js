@@ -9,6 +9,7 @@ const REMOTE_URLS = {
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  transpilePackages: ["@forum/shared"],
   webpack(config, options) {
     if (!options.isServer) {
       config.plugins.push(

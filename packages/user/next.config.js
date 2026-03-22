@@ -3,6 +3,7 @@ const NextFederationPlugin = require("@module-federation/nextjs-mf");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  transpilePackages: ["@forum/shared"],
   webpack(config, options) {
     if (!options.isServer) {
       config.plugins.push(

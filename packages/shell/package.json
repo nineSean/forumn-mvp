@@ -3,29 +3,30 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3000",
+    "dev": "NEXT_PRIVATE_LOCAL_WEBPACK=true next dev -p 3000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@forum/shared": "workspace:*",
+    "bcryptjs": "^2",
+    "graphql": "^16",
     "next": "^14",
+    "next-auth": "^4",
     "react": "^18",
     "react-dom": "^18",
-    "next-auth": "^4",
-    "urql": "^4",
-    "graphql": "^16",
-    "bcryptjs": "^2",
-    "@forum/shared": "workspace:*"
+    "urql": "^4"
   },
   "devDependencies": {
     "@module-federation/nextjs-mf": "^8",
-    "typescript": "^5",
+    "@types/bcryptjs": "^2",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "@types/bcryptjs": "^2",
-    "tailwindcss": "^3",
+    "autoprefixer": "^10",
     "postcss": "^8",
-    "autoprefixer": "^10"
+    "tailwindcss": "^3",
+    "typescript": "^5",
+    "webpack": "^5.105.4"
   }
 }
