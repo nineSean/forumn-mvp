@@ -1,3 +1,4 @@
+import React from "react";
 import { useMutation } from "urql";
 import { CREATE_POST_MUTATION } from "@forum/shared";
 import { useRouter } from "next/router";
@@ -9,6 +10,8 @@ export default function CreatePostPage() {
   const [, createPost] = useMutation(CREATE_POST_MUTATION);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+
+  const cancelHref = boardId ? `/forum?boardId=${encodeURIComponent(boardId)}` : "/forum";
 
   const handleSubmit = async () => {
     if (!title.trim() || !content.trim()) return;
@@ -44,7 +47,7 @@ export default function CreatePostPage() {
           Publish
         </button>
         <button
-          onClick={() => router.back()}
+          onClick={() => router.push(cancelHref)}
           className="px-4 py-2 text-gray-600 text-sm border border-gray-300 rounded hover:bg-gray-50"
         >
           Cancel
