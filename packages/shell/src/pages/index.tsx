@@ -8,5 +8,5 @@ export default function Home() {
     router.replace("/forum");
   }, [router]);
 
-  return null;
+  return <div className="p-4 text-gray-500">Redirecting...</div>;
 }
