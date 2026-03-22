@@ -2,8 +2,9 @@
   "name": "forum-mvp",
   "private": true,
   "scripts": {
-    "dev:api": "turbo run dev --filter=api",
-    "dev:shell": "turbo run dev --filter=shell",
+    "dev": "turbo run dev",
+    "dev:api": "turbo run dev --filter=@forum/api",
+    "dev:frontend": "turbo run dev --filter=@forum/shell --filter=@forum/forum --filter=@forum/user --filter=@forum/admin",
     "build": "turbo run build",
     "test": "turbo run test",
     "lint": "turbo run lint"
