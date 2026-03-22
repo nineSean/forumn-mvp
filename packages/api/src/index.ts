@@ -23,9 +23,10 @@ app.get("/health", (c) => c.json({ status: "ok" }));
 
 // Local dev server
 if (process.env.NODE_ENV !== "production") {
-  const { serve } = await import("@hono/node-server");
-  serve({ fetch: app.fetch, port: 4000 }, () => {
-    console.log("API server running on http://localhost:4000");
+  import("@hono/node-server").then(({ serve }) => {
+    serve({ fetch: app.fetch, port: 4000 }, () => {
+      console.log("API server running on http://localhost:4000");
+    });
   });
 }
 
