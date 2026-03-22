@@ -1,0 +1,15 @@
+{
+  "name": "forum-mvp",
+  "private": true,
+  "scripts": {
+    "dev:api": "turbo run dev --filter=api",
+    "dev:shell": "turbo run dev --filter=shell",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint"
+  },
+  "devDependencies": {
+    "turbo": "^2",
+    "typescript": "^5"
+  }
+}
