@@ -27,7 +27,9 @@
 
 ## Micro-Frontend Architecture
 
-使用 Module Federation（`@module-federation/nextjs-mf`），Shell 作为 host，其余 3 个作为 remote。
+使用 Module Federation（`@module-federation/nextjs-mf`），Shell 作为 host，其余 3 个作为 remote。使用 **Pages Router**（Module Federation 对 App Router/RSC 支持尚不成熟）。
+
+Remote 应用构建为独立 JS bundle，部署在各自的 Amplify 应用上（提供 `remoteEntry.js`），Shell 在运行时通过 URL 加载。
 
 | App | Responsibility | Route | Exposed Modules |
 |-----|---------------|-------|-----------------|
@@ -55,6 +57,7 @@ users
   email         VARCHAR UNIQUE
   name          VARCHAR
   avatar_url    VARCHAR
+  password_hash VARCHAR
   role          ENUM('member', 'admin')
   created_at    TIMESTAMP
 
@@ -128,9 +131,12 @@ type Mutation {
 
 ### Key Decisions
 
-- 分页: cursor-based（基于 `created_at`）
-- 认证: NextAuth.js 颁发 JWT，Hono 中间件校验，通过 GraphQL context 传递用户信息
-- 权限: Hono 中间件层做角色校验（admin 操作）
+- 分页: cursor-based（基于 `created_at` + `id` 组合，保证唯一性）
+- 认证: NextAuth.js Credentials Provider，邮箱/密码登录，bcrypt 哈希。MVP 不做密码重置和邮箱验证，用户由管理员通过 Admin 应用创建。
+- 权限: Hono 中间件层做角色校验。member 可编辑/删除自己的帖子和回复，admin 可管理所有内容。
+- 删除策略: 帖子和回复均为硬删除（MVP 简化）。删除帖子时级联删除其所有回复。
+- 错误处理: GraphQL Yoga 内置错误格式，业务错误通过自定义 error code 返回（如 `UNAUTHORIZED`, `NOT_FOUND`, `FORBIDDEN`）。
+- MVP 不支持编辑回复。
 
 ## Deployment & Infrastructure
 
@@ -142,6 +148,7 @@ type Mutation {
 | API Gateway (HTTP API) | GraphQL API 入口，CORS、限流 |
 | Lambda | 运行 Hono + GraphQL Yoga + Prisma |
 | RDS PostgreSQL | 数据库，db.t4g.micro |
+| RDS Proxy | Lambda 连接池，避免连接数耗尽 |
 | VPC | RDS 私有子网，Lambda 通过 VPC 访问 |
 | Secrets Manager | 数据库密码、NextAuth secret |
 
