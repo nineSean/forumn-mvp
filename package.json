@@ -8,6 +8,8 @@
     "dev:frontend": "turbo run dev --filter=@forum/shell --filter=@forum/forum --filter=@forum/user --filter=@forum/admin",
     "build": "turbo run build",
     "test": "turbo run test",
+    "test:routes": "node scripts/route-regression.mjs",
+    "test:routes:unit": "node --test scripts/route-regression.test.mjs",
     "lint": "turbo run lint"
   },
   "devDependencies": {

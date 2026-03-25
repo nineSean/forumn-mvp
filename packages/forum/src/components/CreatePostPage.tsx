@@ -1,15 +1,18 @@
 import React from "react";
 import { useMutation } from "urql";
 import { CREATE_POST_MUTATION } from "@forum/shared";
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getSearchParam } from "../lib/location";
 
 export default function CreatePostPage() {
-  const router = useRouter();
-  const boardId = router.query.boardId as string;
+  const [boardId, setBoardId] = useState("");
   const [, createPost] = useMutation(CREATE_POST_MUTATION);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+
+  useEffect(() => {
+    setBoardId(getSearchParam("boardId"));
+  }, []);
 
   const cancelHref = boardId ? `/forum?boardId=${encodeURIComponent(boardId)}` : "/forum";
 
@@ -19,7 +22,7 @@ export default function CreatePostPage() {
       input: { boardId, title, content },
     });
     if (result.data?.createPost) {
-      router.push(`/forum/${result.data.createPost.id}`);
+      window.location.assign(`/forum/${result.data.createPost.id}`);
     }
   };
 
@@ -47,7 +50,7 @@ export default function CreatePostPage() {
           Publish
         </button>
         <button
-          onClick={() => router.push(cancelHref)}
+          onClick={() => window.location.assign(cancelHref)}
           className="px-4 py-2 text-gray-600 text-sm border border-gray-300 rounded hover:bg-gray-50"
         >
           Cancel

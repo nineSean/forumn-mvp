@@ -1,17 +1,17 @@
+import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useState } from "react";
 
 export function Header() {
   const { data: session } = useSession();
   const [searchQuery, setSearchQuery] = useState("");
-  const router = useRouter();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
+    const trimmedQuery = searchQuery.trim();
+    if (trimmedQuery && typeof window !== "undefined") {
+      window.location.assign(`/search?q=${encodeURIComponent(trimmedQuery)}`);
     }
   };
 

@@ -1,12 +1,15 @@
 import { useQuery } from "urql";
-import { useRouter } from "next/router";
 import { POSTS_QUERY } from "@forum/shared";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getSearchParam } from "../lib/location";
 
 export default function ForumPage() {
-  const router = useRouter();
-  const boardId = (router.query.boardId as string) || "";
+  const [boardId, setBoardId] = useState("");
   const [cursor, setCursor] = useState<string | null>(null);
+
+  useEffect(() => {
+    setBoardId(getSearchParam("boardId"));
+  }, []);
 
   const [{ data, fetching }] = useQuery({
     query: POSTS_QUERY,
@@ -28,7 +31,7 @@ export default function ForumPage() {
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">Posts</h1>
         <button
-          onClick={() => router.push(`/forum/new?boardId=${boardId}`)}
+          onClick={() => window.location.assign(`/forum/new?boardId=${boardId}`)}
           className="px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700"
         >
           New Post
@@ -39,7 +42,7 @@ export default function ForumPage() {
         {posts.map(({ node }: any) => (
           <div
             key={node.id}
-            onClick={() => router.push(`/forum/${node.id}`)}
+            onClick={() => window.location.assign(`/forum/${node.id}`)}
             className="p-4 border border-gray-200 rounded cursor-pointer hover:bg-gray-50"
           >
             <h2 className="font-semibold text-gray-900">{node.title}</h2>

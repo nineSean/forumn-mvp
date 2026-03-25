@@ -10,8 +10,8 @@ const nextConfig = {
         name: "user",
         filename: `static/${options.isServer ? "ssr" : "chunks"}/remoteEntry.js`,
         exposes: {
-          "./ProfilePage": "./src/components/ProfilePage",
-          "./SettingsPage": "./src/components/SettingsPage",
+          "./ProfilePage": "./src/components/FederatedProfilePage",
+          "./SettingsPage": "./src/components/FederatedSettingsPage",
         },
         shared: {
           urql: { singleton: true, requiredVersion: false },

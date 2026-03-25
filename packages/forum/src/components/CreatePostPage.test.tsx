@@ -5,26 +5,31 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import CreatePostPage from "./CreatePostPage";
 
-const { push, useMutation } = vi.hoisted(() => ({
-  push: vi.fn(),
+const { assign, useMutation } = vi.hoisted(() => ({
+  assign: vi.fn(),
   useMutation: vi.fn(() => [null, vi.fn()]),
 }));
 
-vi.mock("next/router", () => ({
-  useRouter: () => ({
-    push,
-    query: { boardId: "board-123" },
-  }),
-}));
+vi.mock("urql", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("urql")>();
 
-vi.mock("urql", () => ({
-  useMutation,
-}));
+  return {
+    ...actual,
+    useMutation,
+  };
+});
 
 describe("CreatePostPage", () => {
   beforeEach(() => {
-    push.mockReset();
+    assign.mockReset();
     useMutation.mockReturnValue([null, vi.fn()]);
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      value: {
+        assign,
+        search: "?boardId=board-123",
+      },
+    });
   });
 
   it("returns to the current board when cancel is clicked", () => {
@@ -32,6 +37,6 @@ describe("CreatePostPage", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
 
-    expect(push).toHaveBeenCalledWith("/forum?boardId=board-123");
+    expect(assign).toHaveBeenCalledWith("/forum?boardId=board-123");
   });
 });

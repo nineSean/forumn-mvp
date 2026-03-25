@@ -1,10 +1,14 @@
-import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { useQuery } from "urql";
 import { SEARCH_POSTS_QUERY } from "@forum/shared";
+import { getSearchParam } from "../lib/location";
 
 export default function SearchPage() {
-  const router = useRouter();
-  const query = router.query.q as string;
+  const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    setQuery(getSearchParam("q"));
+  }, []);
 
   const [{ data, fetching }] = useQuery({
     query: SEARCH_POSTS_QUERY,
@@ -29,7 +33,7 @@ export default function SearchPage() {
           {posts.map(({ node }: any) => (
             <div
               key={node.id}
-              onClick={() => router.push(`/forum/${node.id}`)}
+              onClick={() => window.location.assign(`/forum/${node.id}`)}
               className="p-4 border border-gray-200 rounded cursor-pointer hover:bg-gray-50"
             >
               <h2 className="font-semibold">{node.title}</h2>
